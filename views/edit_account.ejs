@@ -1,0 +1,32 @@
+<%- include("partials/header.ejs") %>
+
+<div class="base-container">
+    <h2>Edit your account information</h2>
+    <!--This is where the user will edit their information
+    All the fields will contain the users information. So they will need to change
+    the desired fields they want to update-->
+    <form method="post" action="/edit_account">
+        <div class="form-group">
+            <label for="first_name">First Name:</label>
+            <input type="text" name="first_name" class="input-field" value="<%= first_name %>" required>
+        </div>
+        <div class="form-group">
+            <label for="last_name">Last Name:</label>
+            <input type="text" name="last_name" class="input-field" value="<%= last_name %>" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="text" name="email" class="input-field" value="<%= email %>" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" name="password" class="input-field" value="<%= password %>" required>
+        </div>
+        <!--This will update the user's information-->
+        <button type="submit" class="library-button">Update Profile Information</button>
+        <!--This will take the user back to the previous page they were on-->
+        <button class="library-button" onclick="window.history.back()" type="button">Go back</button>
+    </form>
+</div>
+
+<%- include("partials/footer.ejs") %>

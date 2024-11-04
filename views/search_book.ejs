@@ -1,0 +1,80 @@
+<%- include("partials/header.ejs") %>
+
+<div class="container-search">
+    <div class="search-wrapper">
+        <form method="get" action="/search"> 
+            <input type="text" class="form-control" name="query" value="<%= query %>" placeholder="Search for books..." />
+            <button type="submit" class="search-button"> Search</button>
+        </form>
+    </div>
+    <div class="product-details">
+        <!-- If there are any books found that are being searched -->
+        <% if (books && books.length > 0) { %>
+            <table class="product-display">
+                <thead>
+                    <tr>
+                        <!-- This is the header of the table view -->
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Author</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% books.forEach(function(book) { %>
+                        <!-- This will display every individual book the user has searched for -->
+                        <tr>
+                            <td><img src="uploads/<%= book.book_image %>" height="100" width="100" alt="<%= book.book_name %>"></td>
+                            <td class="product"><a class="recipe-page" href="/view_book/<%= book.id %>"><%= book.book_name %></a></td>
+                            <td class="product"><%= book.category %></td>
+                            <td class="product"><%= book.author %></td>
+                            <td>
+                                <!-- This will take the user to the view page of the book -->
+                                <a href="/view_book/<%= book.id %>" class="editbtn">View</a>
+                                <!-- Check if the user is an admin to show the remove button -->
+                                <% if (user && user.isAdmin) { %>
+                                    <form method="post" action="/delete_book/<%= book.id %>" style="display:inline;"> <!-- Update with your delete route -->
+                                        <button class="library-button" type="submit"> Remove</button>
+                                    </form>
+                                <% } %>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+            <!-- Pagination logic -->
+            <div class="page-container">
+                <!-- Previous page button -->
+                <% if (currentPage > 1) { %>
+                    <a href="?query=<%= query %>&page=<%= currentPage - 1 %>"><<</a>
+                <% } else { %>
+                    <span class="disabled"><<</span>
+                <% } %>
+            
+                <!-- Page numbers -->
+                <% for (let i = 1; i <= totalPages; i++) { %>
+                    <% if (currentPage === i) { %>
+                        <span class="selected-page"><%= i %></span>
+                    <% } else { %>
+                        <a href="?query=<%= query %>&page=<%= i %>"><%= i %></a>
+                    <% } %>
+                <% } %>
+            
+                <!-- Next page button -->
+                <% if (currentPage < totalPages) { %>
+                    <a href="?query=<%= query %>&page=<%= currentPage + 1 %>">>></a>
+                <% } else { %>
+                    <span class="disabled">>></span>
+                <% } %>
+            </div>            
+        <% } else { %>
+            <p>No results found.</p>
+        <% } %>
+        <!-- This will take the user back to the previous page they were on -->
+        <button class="account-info-buttons" onclick="window.history.back()" type="button">Go back</button>
+    </div>
+</div>
+
+
+<%- include("partials/footer.ejs") %>

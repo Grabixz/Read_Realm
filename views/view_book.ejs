@@ -1,0 +1,122 @@
+<%- include("partials/header.ejs") %>
+
+<div class="featured-container">
+    <section class="featured-recipe-hero">
+        <!--This displays the recipe image-->
+        <img src="/uploads/<%= book_image %>" class="img recipe-hero-img" alt="Image of <%= book_name %>">
+        <article class="recipe-info">
+            <!--This displays the recipes information-->
+            <label class="title-account"><%= book_name %></label>
+            <div class="recipe-information">
+                <article>
+                    <label>Author:</label>
+                    <a><%= author %></a>
+                </article>
+                <article>
+                    <label>Category:</label>
+                    <a><%= category %></a>
+                </article>
+                <article>
+                    <label>Publisher:</label>
+                    <a><%= publisher %></a>
+                </article>
+                <article>
+                    <label>Year Published:</label>
+                    <a><%= published_year %></a>
+                </article>
+                <% if (isbn) { %>
+                    <article>
+                        <label>ISBN:</label>
+                        <a><%= isbn %></a>
+                    </article>
+                <% } %>      
+                <article>
+                    <label>Availability:</label>
+                    <a>
+                        <% if (availability === 'available') { %>
+                            Available
+                        <% } else if (availability === 'checked_out') { %>
+                            Checked Out
+                        <% } else if (availability === 'reserved') { %>
+                            Reserved
+                        <% } %>
+                    </a>
+                </article>
+            </div>
+            <p class="about-recipe"><%= book_description %></p>
+        </article>
+    </section>
+</div>
+<div class="counter">
+    <div class="row">
+        <div class="account-button-container">
+            <div class="count-data text-center">
+                <% if (availability == 'available') { %>
+                    <% if (approved == false && requested == false && returned == true) { %>
+                        <form method="POST" action="/request_approval">
+                            <input type="hidden" name="book_id" value="<%= id %>"> 
+                            <button type="submit" class="account-info-buttons">Request Book</button>
+                        </form>
+                    <% } else if (approved == false && requested == false && returned == false) { %>
+                        <form method="POST" action="/request_approval">
+                            <input type="hidden" name="book_id" value="<%= id %>"> 
+                            <button type="submit" class="account-info-buttons">Request Book</button>
+                        </form>
+                    <% } %>
+                <% } %>
+            </div>
+        </div>
+        <% if (availability == 'reserved') { %>
+            <% if (approved == false && returned == false && requested == true && pending_request == true) { %>
+                <div class="account-button-container">
+                    <div class="count-data text-center">
+                        <!--This will take the user to the page where the user can upload their recipe to the website-->
+                        <button type="button" class="account-info-buttons" disabled>Pending Request</button>
+                    </div>
+                </div>
+            <% } %>
+        <% } %>
+        <% if (availability == 'checked_out') { %>
+            <% if (approved == true && returned == false && requested == false && pending_request == true && extend_counter < 3) { %>
+                <div class="account-button-container">
+                    <div class="count-data text-center">
+                        <form method="POST" action="/extend_date">
+                            <input type="hidden" name="request_id" value="<%= request_id %>">
+                            <input type="hidden" name="book_id" value="<%= id %>">
+                            <button type="submit" class="account-info-buttons">Extend Date</button>
+                        </form>
+                    </div>
+                </div>
+            <% } if (approved == true && returned == false && requested == false && pending_request == true && extend_counter >= 3) {%>
+            <div class="account-button-container">
+                <div class="count-data text-center">
+                    <!--This will take the user to the page where the user can upload their recipe to the website-->
+                    <button type="button" class="account-info-buttons" disabled>Extension Exceeded</button>
+                </div>
+            </div>
+            <% } %>
+        <% } %>
+        <% if (admin == true) { %>
+            <div class="account-button-container">
+                <div class="count-data text-center">
+                    <!--This will take the user to the page where the user can upload their recipe to the website-->
+                    <button type="button" onclick="window.location.href='/edit_book/<%= id %>'" class="account-info-buttons">Edit Book</button>
+                </div>
+            </div>
+            <div class="account-button-container">
+                <div class="count-data text-center">
+                    <form method="POST" action="/delete_book/<%= id %>" onsubmit="return confirm('Are you sure you want to delete the book?');">
+                        <button type="submit" class="account-info-buttons">Delete Book</button>
+                    </form>
+                </div>
+            </div>            
+        <% } %>
+        <div class="account-button-container">
+            <div class="count-data text-center">
+                <button class="account-info-buttons" onclick="window.history.back()" type="button">Go back</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include("partials/footer.ejs") %>

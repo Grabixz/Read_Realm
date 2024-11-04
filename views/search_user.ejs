@@ -1,0 +1,70 @@
+<%- include("partials/header.ejs") %>
+
+<div class="container-search">
+    <div class="search-wrapper">
+        <form method="get" action="/search_user"> 
+            <input type="text" class="form-control" name="query" value="<%= query %>" placeholder="Search for users..." />
+            <button type="submit" class="search-button"> Search</button>
+        </form>
+    </div>
+    <div class="product-details">
+        <!-- If there are any users found that are being searched -->
+        <% if (users && users.length > 0) { %>
+            <table class="product-display">
+                <thead>
+                    <tr>
+                        <!-- This is the header of the table view -->
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Date Joined</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% users.forEach(function(user) { %>
+                        <!-- This will display every individual user found by the search -->
+                        <tr>
+                            <td class="product"><%= user.first_name %></td>
+                            <td class="product"><%= user.last_name %></td>
+                            <td class="product"><%= user.email %></td>
+                            <td class="product"><%= new Date(user.date_joined).toLocaleDateString() %></td>
+                            <td><a href="/view_user/<%= user.id %>" class="library-button">View Profile</a></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+            <!-- Pagination logic -->
+            <div class="page-container">
+                <!-- Previous page button -->
+                <% if (currentPage > 1) { %>
+                    <a href="?query=<%= query %>&page=<%= currentPage - 1 %>"><<</a>
+                <% } else { %>
+                    <span class="disabled"><<</span>
+                <% } %>
+            
+                <!-- Page numbers -->
+                <% for (let i = 1; i <= totalPages; i++) { %>
+                    <% if (currentPage === i) { %>
+                        <span class="selected-page"><%= i %></span>
+                    <% } else { %>
+                        <a href="?query=<%= query %>&page=<%= i %>"><%= i %></a>
+                    <% } %>
+                <% } %>
+            
+                <!-- Next page button -->
+                <% if (currentPage < totalPages) { %>
+                    <a href="?query=<%= query %>&page=<%= currentPage + 1 %>">>></a>
+                <% } else { %>
+                    <span class="disabled">>></span>
+                <% } %>
+            </div>            
+        <% } else { %>
+            <p>No users found.</p>
+        <% } %>
+        <!-- This will take the user back to the previous page they were on -->
+        <button class="account-info-buttons" onclick="window.history.back()" type="button">Go back</button>
+    </div>
+</div>
+
+<%- include("partials/footer.ejs") %>

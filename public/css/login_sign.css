@@ -1,0 +1,172 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Dancing+Script:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Goudy+Bookletter+1911&display=swap');
+
+
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-family: 'Barlow Semi Condensed', sans-serif;
+}
+
+html, body {
+    height: 100%;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+.show{
+    display: block;
+}
+
+.image_container {
+    height: 100%; 
+    width: 100%;  
+    background: url('/images/First_background.jpg') no-repeat center center;
+    background-size: cover;
+    overflow: hidden;
+    margin: 0; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.container {
+    max-width: 430px;
+    width: 100%;
+    background: #1f140c;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 0 20px;
+}
+
+
+.container .forms{
+    align-items: center;
+    width: 200%;
+    transition: height 0.2s ease;
+}
+
+
+.container .form{
+    width: 50%;
+    padding: 30px;
+    transition: margin-left 0.18s ease;
+}
+
+.container.active .login{
+    margin-left: -50%;
+    opacity: 0;
+    transition: margin-left 0.18s ease, opacity 0.15s ease;
+}
+
+
+.container.active .signup{
+    opacity: 1;
+    transition: opacity 0.2s ease;
+}
+
+.title_container {
+    text-align: center; 
+    margin: auto; 
+}
+
+.title {
+    font-family: "Goudy Bookletter 1911", sans-serif;
+    font-size: 45px;
+    font-weight: 600;
+    color: #C3A88C;
+}
+
+.container.active .forms{
+    height: auto;
+}
+
+.form div{
+    margin-top: 20px;
+}
+
+.form .input-field{
+    position: relative;
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    border-bottom: 2px solid #ccc;
+    border-top: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+
+.form .input-field:is(:focus, :valid){
+    border-bottom-color: #cd9564;
+}
+
+.form label{
+    font-size: 15px;
+    font-weight: 500;
+    color: #BA9D7D;
+}
+
+.form ul{
+    color: #ebd5c1;
+    text-align: center;
+    list-style: none;
+    letter-spacing: 1px;
+    font-size: 10px;
+}
+
+.form .text{
+    color: white;
+    font-size: 14px;
+}
+
+.form .submit-button{
+    width: 100%;
+    border: none;
+    color: #CDC5B3;
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    border-radius: 6px;
+    background-color: #224158;
+    cursor: pointer;
+    padding: 10px;
+    transition: all 0.3s ease;
+}
+
+.submit-button:hover{
+    color: #fff;
+    background-color: #679CC4;
+}
+
+.form .login-signup .login-link,
+.form .login-signup .signup-link{
+    text-decoration: none;
+    cursor: pointer;
+    color: #ebd5c1;
+    transition: all 0.3s ease;
+}
+
+.form .login-signup .login-link:hover,
+.form .login-signup .signup-link:hover{
+    color: #cd9564;
+}
+
+.form .login-signup{
+    margin-top: 20px;
+    text-align: center;
+}

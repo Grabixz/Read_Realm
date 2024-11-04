@@ -1,0 +1,81 @@
+<%- include("partials/header.ejs") %>
+
+<div class="product-details">
+    <!-- If there are any books found that are being searched -->
+    <% if (books && books.length > 0) { %>
+        <table class="product-display">
+            <thead>
+                <tr>
+                    <!-- This is the header of the table view -->
+                    <th></th>
+                    <th>Book</th>
+                    <th>User</th>
+                    <th>Date Requested</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% books.forEach(function(book) { %>
+                    <!-- This will display every individual book the user has searched for -->
+                    <tr>
+                        <td><img src="uploads/<%= book.book_image %>" height="100" width="100" alt="<%= book.book_name %>"></td>
+                        <td class="product"><a class="recipe-page"><%= book.book_name %></a></td>
+                        <td class="product"><%= book.user_email %></td>
+                        <td class="product">
+                            <%= new Date(book.date_requested).toLocaleString('en-GB', { 
+                                day: '2-digit', 
+                                month: '2-digit', 
+                                year: 'numeric', 
+                                hour: '2-digit', 
+                                minute: '2-digit', 
+                                hour12: false 
+                            }) %>
+                        </td>
+                        <td>
+                            <% console.log(book.book_id); %>
+                            <form method="post" action="/approve_request/<%= book.book_id %>" style="display:inline;"> 
+                                <input type="hidden" name="user_email" value="<%= book.user_email %>">
+                                <button class="editbtn" type="submit"> Approve</button>
+                            </form>
+                            <form method="post" action="/decline_request/<%= book.book_id %>" style="display:inline;"> 
+                                <input type="hidden" name="user_email" value="<%= book.user_email %>"> 
+                                <button class="editbtn" type="submit"> Decline</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+        <!-- Pagination logic -->
+        <div class="page-container">
+            <!-- Previous page button -->
+            <% if (currentPage > 1) { %>
+                <a href="?query=<%= query %>&page=<%= currentPage - 1 %>"><<</a>
+            <% } else { %>
+                <span class="disabled"><<</span>
+            <% } %>
+        
+            <!-- Page numbers -->
+            <% for (let i = 1; i <= totalPages; i++) { %>
+                <% if (currentPage === i) { %>
+                    <span class="selected-page"><%= i %></span>
+                <% } else { %>
+                    <a href="?query=<%= query %>&page=<%= i %>"><%= i %></a>
+                <% } %>
+            <% } %>
+        
+            <!-- Next page button -->
+            <% if (currentPage < totalPages) { %>
+                <a href="?query=<%= query %>&page=<%= currentPage + 1 %>">>></a>
+            <% } else { %>
+                <span class="disabled">>></span>
+            <% } %>
+        </div>            
+    <% } else { %>
+        <p>No results found.</p>
+    <% } %>
+    <!-- This will take the user back to the previous page they were on -->
+    <button class="account-info-buttons" onclick="window.history.back()" type="button">Go back</button>
+</div>
+
+<%- include("partials/footer.ejs") %>

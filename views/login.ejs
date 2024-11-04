@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/login_sign.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+</head>
+<body>
+    <% if (success_msg) { %>
+        <script>
+            swal({
+                title: "Success!",
+                text: "<%= success_msg %>",
+                icon: "success",
+                timer: 2000,
+                buttons: false
+            });
+        </script>
+    <% } %>
+    <% if (error_msg) { %>
+        <script>
+            swal({
+                title: "Error!",
+                text: "<%= error_msg %>",
+                icon: "error",
+                timer: 2000,
+                buttons: false
+            });
+        </script>
+    <% } %>
+    <div class="image_container">
+        <div class="container">
+            <div class="forms">
+                <div class="form login">
+                    <div class="title_container">
+                        <span class="title">Welcome to Read Realm System</span>
+                    </div>
+                    <form action="/login" method="POST">
+                        <div>
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email" class="input-field" value="joshua.commerford@gmail.com" required>
+                        </div>
+                        <div>
+                            <label for="password">Password</label>
+                            <input type="password" name="password" id="password" class="input-field" value="Password123" required>
+                        </div>
+                        <% if (typeof error !== 'undefined') { %>
+                            <script>
+                                swal({
+                                    title: "Error!",
+                                    text: "<%= error %>",
+                                    icon: "error",
+                                    buttons: true
+                                });
+                            </script>
+                        <% } %>
+                        <div>
+                            <button type="submit" class="submit-button">Login</button>
+                        </div>
+                    </form>
+                    <div class="login-signup">
+                        <span class="text">Not a member yet?
+                            <u><a href="/register" class="signup-link">Register Now</a></u>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

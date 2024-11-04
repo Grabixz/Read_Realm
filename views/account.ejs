@@ -1,0 +1,91 @@
+<%- include("partials/header.ejs") %>
+    <div class="base-container">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-6">
+                    <div class="about-text go-to">
+                        <!--This displays the user's name and the date they joined DishDelve-->
+                        <label class="title-account">Welcome to your account <%= first_name %> <%= last_name %>!</label>
+                        <br><br>
+                        <p>Here’s an overview of your account. Keep track of your borrowed books and any outstanding fines.</p>
+                        <div class="row about-list">
+                            <div class="col-md-6">
+                                <!--This displays the user's information-->
+                                <div class="media">
+                                    <label>Books in use</label>
+                                    <p><b><%= booksInUse %></b></p>
+                                </div>
+                                <div class="media">
+                                    <label> Overdue books</label>
+                                    <p><b><%= overdueBooks %></b></p>
+                                </div>
+                                <div class="media">
+                                    <label>Total Fine Amount</label>
+                                    <p><b>R <%= totalFine %> </b></p>
+                                </div>
+                                <div class="media">
+                                    <label>Total Books Returned</label>
+                                    <p><b><%= totalBooksBorrowed %></b></p>
+                                </div>
+                                <div class="media">
+                                    <label>Membership Start Date</label>
+                                    <p><b><%= date_joined ? new Date(date_joined).toLocaleString('en-GB', { 
+                                        day: '2-digit',
+                                        month: '2-digit', 
+                                        year: 'numeric'
+                                    }) : 'N/A' %></b></p>
+                                </div>                                                             
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about-avatar">
+                        <img class="account-profile-image" src="images/Profile_Account.png" alt="Profile Picture">
+                    </div>
+                </div>
+            </div>
+            <div class="counter">
+                <div class="row">
+                    <div class="account-button-container">
+                        <div class="count-data text-center">
+                            <!--This will take the user to the page where they will edit their account information-->
+                            <button type="button" onclick="window.location.href='/edit_account'" class="account-info-buttons">Edit Profile</button>
+                        </div>
+                    </div>
+                    <% if (admin == true) { %>
+                        <div class="account-button-container">
+                            <div class="count-data text-center">
+                                <!--This will take the user to the page where the user can upload their recipe to the website-->
+                                <button type="button" onclick="window.location.href='/add_book'" class="account-info-buttons">Upload Book</button>
+                            </div>
+                        </div>    
+                        <div class="account-button-container">
+                            <div class="count-data text-center">
+                                <!--This will take the user to the page where they will edit their account information-->
+                                <button type="button" onclick="window.location.href='/approve_books'" class="account-info-buttons">Approve Books</button>
+                            </div>
+                        </div>                
+                    <% } %>
+                    <div class="account-button-container">
+                        <div class="count-data text-center">
+                            <!--This will take the user to the page where the user can upload their recipe to the website-->
+                            <button type="button" onclick="window.location.href='/borrowed_books'" class="account-info-buttons">View Borrowed Books</button>
+                        </div>
+                    </div>
+                    <div class="account-button-container">
+                        <div class="count-data text-center">
+                            <!--This will log the user out of the website if they want to log into another account-->
+                            <form method="POST" action="/logout" onsubmit="return confirm('Are you sure you want to log out?');">
+                                <button type="submit" class="account-info-buttons">Logout</button>
+                            </form>
+                            <!--This will take the user back to the previous page they were on-->
+                            <button class="account-info-buttons" onclick="window.history.back()" type="button">Go back</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<%- include("partials/footer.ejs") %>

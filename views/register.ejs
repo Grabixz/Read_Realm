@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="/css/login_sign.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+<body>
+    <div class="image_container">
+        <div class="container">
+            <div class="forms">
+                <div class="form login">
+                    <div class="title_container">
+                        <span class="title">Register below</span>
+                    </div>
+                    <form action="/register" method="POST">
+                        <div>
+                            <label for="first_name">First Name:</label>
+                            <input type="text" name="first_name" class="input-field" required>
+                        </div>
+                        <div>
+                            <label for="last_name">Last Name:</label>
+                            <input type="text" name="last_name" class="input-field" required>
+                        </div>
+                        <div>
+                            <label for="email">Email:</label>
+                            <input type="text" name="email" class="input-field" required>
+                        </div>
+                        <div>
+                            <label for="password">Password:</label>
+                            <input type="password" name="password" class="input-field" required>
+                        </div>
+                        <% if (error_msg) { %>
+                            <script>
+                                swal({
+                                    title: "Error!",
+                                    text: "<%= error_msg %>",
+                                    icon: "error",
+                                    timer: 2000,
+                                    buttons: false
+                                });
+                            </script>
+                        <% } %>
+                        <div>
+                            <button type="submit" class="submit-button">Register</button>
+                        </div>
+                    </form>
+                    <div class="login-signup">
+                        <span class="text">Already a member?
+                            <u><a href="/login" class="signup-link">Login here</a></u>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

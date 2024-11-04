@@ -1,0 +1,36 @@
+<%- include("partials/header.ejs") %>
+<div class="base-container">
+    <div class="title_container">
+        <span class="title">Update Book below</span>
+    </div>
+    <form action="/edit_book/<%= book.id %>" method="POST" enctype="multipart/form-data">
+        <label for="book_name">Book Name:</label>
+        <input type="text" name="book_name" id="book_name" class="input-field" value="<%= book.book_name %>" required>
+    
+        <label for="book_description">Description:</label>
+        <input type="text" name="book_description" id="book_description" class="input-field" value="<%= book.book_description %>" required></input>
+    
+        <label for="author">Author:</label>
+        <input type="text" name="author" id="author" value="<%= book.author %>" class="input-field" required>
+    
+        <label for="publisher">Publisher:</label>
+        <input type="text" name="publisher" id="publisher" value="<%= book.publisher %>" class="input-field" required>
+    
+        <label for="published_year">Published Year:</label>
+        <input type="number" name="published_year" id="published_year" value="<%= book.published_year %>" class="input-field" required>
+    
+        <label for="category">Category:</label>
+        <input type="text" name="category" id="category" value="<%= book.category %>" class="input-field" required>
+    
+        <label for="isbn">ISBN:</label>
+        <input type="text" name="isbn" id="isbn" value="<%= book.ISBN %>" class="input-field" required>
+    
+        <label for="book_image">Change Book Image:</label>
+        <input type="file" name="book_image" id="book_image" class="input-field" placeholder="Leave open if you want to leave current image">
+    
+        <button type="submit" class="library-button">Update Book</button>
+    </form>
+    <button class="library-button" onclick="window.history.back()" type="button">Go back</button>
+</div>
+
+<%- include("partials/footer.ejs") %>

@@ -1,0 +1,76 @@
+<%- include("partials/header.ejs") %>
+
+<div class="product-details">
+    <!-- If there are any books found that are being searched -->
+    <% if (books && books.length > 0) { %>
+        <table class="product-display">
+            <thead>
+                <tr>
+                    <!-- This is the header of the table view -->
+                    <th></th>
+                    <th>Book</th>
+                    <th>Returned</th>
+                    <th>Due Date</th>
+                    <th>Over Due</th>
+                    <th>Fine Amount</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% books.forEach(function(book) { %>
+                    <!-- This will display every individual book the user has searched for -->
+                    <tr>
+                        <td><img src="uploads/<%= book.book_image %>" height="100" width="100" alt="<%= book.book_name %>"></td>
+                        <td class="product"><a class="recipe-page" href="/view_book/ <%= book.book_id %>"><%= book.book_name %></a></td>
+                        <td class="product"><%= book.returned ? 'Book Returned' : 'Not Returned' %></td>
+                        <td class="product">
+                            <%= book.due_date ? new Date(book.due_date).toLocaleString('en-GB', { 
+                                day: '2-digit',
+                                month: '2-digit', 
+                                year: 'numeric'
+                            }) : 'N/A' %>
+                        </td>
+                        <td class="product"><%= book.overdue ? 'Book Overdue' : 'Book Not Overdue' %></td>
+                        <td class="product">R<%= (isNaN(book.fine_amount) ? 0.00 : Number(book.fine_amount)).toFixed(2) %></td>
+                        <td>
+                            <% console.log(book.id); %>
+                            <!-- This will take the user to the view page of the book -->
+                            <a href="/view_book/<%= book.book_id %>" class="editbtn">View</a>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+        <!-- Pagination logic -->
+        <div class="page-container">
+            <!-- Previous page button -->
+            <% if (currentPage > 1) { %>
+                <a href="?query=<%= query %>&page=<%= currentPage - 1 %>"><<</a>
+            <% } else { %>
+                <span class="disabled"><<</span>
+            <% } %>
+        
+            <!-- Page numbers -->
+            <% for (let i = 1; i <= totalPages; i++) { %>
+                <% if (currentPage === i) { %>
+                    <span class="selected-page"><%= i %></span>
+                <% } else { %>
+                    <a href="?query=<%= query %>&page=<%= i %>"><%= i %></a>
+                <% } %>
+            <% } %>
+        
+            <!-- Next page button -->
+            <% if (currentPage < totalPages) { %>
+                <a href="?query=<%= query %>&page=<%= currentPage + 1 %>">>></a>
+            <% } else { %>
+                <span class="disabled">>></span>
+            <% } %>
+        </div>            
+    <% } else { %>
+        <p>No results found.</p>
+    <% } %>
+    <!-- This will take the user back to the previous page they were on -->
+    <button class="account-info-buttons" onclick="window.history.back()" type="button">Go back</button>
+</div>
+
+<%- include("partials/footer.ejs") %>

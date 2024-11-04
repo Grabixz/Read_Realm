@@ -1,0 +1,43 @@
+<%- include("partials/header.ejs") %>
+<% if (success_msg) { %>
+    <script>
+        swal({
+            title: "Success!",
+            text: "<%= success_msg %>",
+            icon: "success",
+            timer: 2000,
+            buttons: false
+        });
+    </script>
+<% } %>
+<br>
+<br>
+<div class="title_container">
+    <label class="title-account">Welcome <%= first_name %>, here are some books you might like</label>
+</div>
+<br>
+<div id="formList">
+        <div id="list">
+            <% books.forEach(function(book) { %>
+            <div class="item">
+                <div class="book_box">
+                    <div class="book_image">
+                        <img src="uploads/<%= book.book_image %>" alt="Image of <%= book.book_name %>">
+                        <div class="book-overlay">
+                            <a class="book_name"><%= book.book_name %></a>
+                            <a class="book_description"><%= book.book_description %></a>
+                            <a href="/view_book/<%= book.id %>" class="view_button">View Book</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% }); %>
+        </div>
+</div>
+<div class="direction">
+    <button id="prev"> < </button>
+    <button id="next"> > </button>
+</div>
+<script src="/script/script.js"></script>
+
+<%- include("partials/footer.ejs") %>

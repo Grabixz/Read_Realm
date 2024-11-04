@@ -1,0 +1,92 @@
+<%- include("partials/header.ejs") %>
+
+<div class="base-container">
+    <h2>Add a Book</h2>
+
+    <% if (success_msg) { %>
+        <script>
+            swal({
+                title: "Success!",
+                text: "<%= success_msg %>",
+                type: "success",
+                timer: 2000,
+                showConfirmButton: false
+            });
+        </script>
+    <% } %>
+
+    <form method="post" enctype="multipart/form-data" action="/add_book">
+        <div class="form-group">
+            <label for="book_name">Book Name:</label>
+            <input type="text" name="book_name" class="input-field" maxlength="150" required>
+        </div>
+        <div class="form-group">
+            <label for="book_description">Book Description:</label>
+            <textarea name="book_description" class="input-field" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="author">Author:</label>
+            <input type="text" name="author" class="input-field" maxlength="100" required>
+        </div>
+        <div class="form-group">
+            <label for="publisher">Publisher:</label>
+            <input type="text" name="publisher" class="input-field" maxlength="100" required>
+        </div>
+        <div class="form-group">
+            <label for="published_year">Published Year:</label>
+            <select name="published_year" class="input-field" required>
+                <option value="" disabled selected>Select current year</option> <!-- Placeholder option -->
+                <% const currentYear = new Date().getFullYear(); 
+                   for (let year = currentYear; year >= currentYear - 50; year--) { %>
+                    <option value="<%= year %>"><%= year %></option>
+                <% } %>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="category">Category:</label>
+            <select name="category" class="input-field" required>
+                <option value="" disabled selected>Select a category</option> 
+                <option value="Adventure">Adventure</option>
+                <option value="Anthology">Anthology</option>
+                <option value="Biography">Biography</option>
+                <option value="Children">Children</option>
+                <option value="Classic">Classic</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Cookbooks">Cookbooks</option>
+                <option value="Dystopian">Dystopian</option>
+                <option value="Fantasy">Fantasy</option>
+                <option value="Fiction">Fiction</option>
+                <option value="Graphic Novels">Graphic Novels</option>
+                <option value="Historical">Historical</option>
+                <option value="Horror">Horror</option>
+                <option value="Humor">Humor</option>
+                <option value="Literary Fiction">Literary Fiction</option>
+                <option value="Memoir">Memoir</option>
+                <option value="Mystery">Mystery</option>
+                <option value="Non-Fiction">Non-Fiction</option>
+                <option value="Politics">Politics</option>
+                <option value="Poetry">Poetry</option>
+                <option value="Religion">Religion</option>
+                <option value="Romance">Romance</option>
+                <option value="Science">Science</option>
+                <option value="Science Fiction">Science Fiction</option>
+                <option value="Self-Help">Self-Help</option>
+                <option value="Thriller">Thriller</option>
+                <option value="Travel">Travel</option>
+                <option value="Young Adult">Young Adult</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="isbn">ISBN:</label>
+            <input type="text" name="isbn" class="input-field" maxlength="20" required>
+        </div>
+        <div class="form-group">
+            <label for="book_image">Book Image:</label>
+            <input type="file" name="book_image" class="input-field" accept=".jpg, .jpeg, .png" required>
+        </div>
+        <button type="submit" class="library-button">Add Book</button>
+    </form>
+    <button class="library-button" onclick="window.location.href='/account'" type="button">Go back</button>
+</div>
+
+<%- include("partials/footer.ejs") %>
