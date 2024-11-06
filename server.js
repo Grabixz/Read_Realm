@@ -69,7 +69,7 @@ const checkOverdueBooks = () => {
         UPDATE requests 
         SET fine_due = true, 
             fine_amount = fine_amount + 5.00 
-        WHERE returned = false AND due_date < ? and returned = false`;
+        WHERE returned = false AND due_date < ?`;
     db.query(sqlQuery, [currentDate], (error, results) => {
         if (error) {
             console.error('Error updating fines:', error);
@@ -148,9 +148,8 @@ app.post('/login', (req, res) => {
                 req.session.first_name = user.first_name;
                 req.session.email = user.email;
                 req.session.admin = user.isAdmin;
-                // Set success message in session
                 req.session.success_msg = 'Login successful!';
-                return res.redirect('/'); // Redirect to home page
+                return res.redirect('/');
             } else {
                 req.flash('error_msg', 'Incorrect email or password');
                 return res.render('login', { 
@@ -859,7 +858,7 @@ app.get('/search_user', (req, res) => {
 
 // This is for when the admin needs to approve the books and this is where it handles the process for it
 app.post('/request_approval', (req, res) => {
-    if (req.session.loggedin && req.session.admin) {
+    if (req.session.loggedin) {
         const { book_id } = req.body; // Get the book ID from the form submission
         const email = req.session.email; // Assuming you are storing user email in session
         // Insert the request into the requests table, also include the current date for 'date_requested'

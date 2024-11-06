@@ -30,9 +30,7 @@
                         </td>
                         <td class="product"><%= book.overdue ? 'Book Overdue' : 'Book Not Overdue' %></td>
                         <td class="product">R<%= (isNaN(book.fine_amount) ? 0.00 : Number(book.fine_amount)).toFixed(2) %></td>
-                        <td>
-                            <% console.log(book.fine_amount); %>
-                            <!-- This will take the user to the view page of the book -->
+                        <td>                            <!-- This will take the user to the view page of the book -->
                             <% if (book.overdue && book.fine_amount != 0.00) { %>
                                 <form method="POST" action="/process_paid">
                                     <% console.log(book.book_id); %>
